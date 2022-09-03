@@ -5,7 +5,7 @@ build:
 laravel-install:
 	docker compose exec app composer create-project --prefer-dist laravel/laravel .
 create-project:
-	mkdir -p src
+	mkdir -p src/backend
 	@make build
 	@make up
 	@make laravel-install
@@ -105,3 +105,5 @@ ide-helper:
 	docker compose exec app php artisan ide-helper:generate
 	docker compose exec app php artisan ide-helper:meta
 	docker compose exec app php artisan ide-helper:models --nowrite
+stan:
+	./src/backend/vendor/bin/phpstan analyse --memory-limit=3G

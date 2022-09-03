@@ -1,0 +1,28 @@
+name: PHP Unit Test
+
+on: [ push ]
+
+env:
+  SLACK_WEBHOOKS: https://hooks.slack.com/services/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
+
+jobs:
+  php-unit:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: src
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer, cs2pr, phpstan
+          coverage: none
+      - name: Composer install
+        run: composer install
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=3G
