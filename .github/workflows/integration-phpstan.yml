@@ -1,0 +1,53 @@
+name: PHPStan
+
+on: [ push ]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: src
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer:v2
+      - name: Composer install
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=3G
+
+      - name: Success
+        uses: rtCamp/action-slack-notify@v2
+        if: success()
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: good
+          SLACK_MESSAGE: 'Message For Success'
+          SLACK_TITLE: CI flow / Success
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Failure
+        uses: rtCamp/action-slack-notify@v2
+        if: failure()
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: 'Message For Failure'
+          SLACK_TITLE: CI flow / Failure
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Cancel
+        uses: rtCamp/action-slack-notify@v2
+        if: cancelled()
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: 'Message For Cancel'
+          SLACK_TITLE: CI flow / Failure
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
