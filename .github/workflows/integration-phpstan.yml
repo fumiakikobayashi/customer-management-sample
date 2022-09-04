@@ -16,7 +16,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           tools: composer:v2
       - name: Composer install
         run: composer install --no-progress --prefer-dist --optimize-autoloader
@@ -32,6 +32,7 @@ jobs:
           SLACK_MESSAGE: 'Message For Success'
           SLACK_TITLE: CI flow / Success
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: Failure
         uses: rtCamp/action-slack-notify@v2
         if: failure()
@@ -41,6 +42,7 @@ jobs:
           SLACK_MESSAGE: 'Message For Failure'
           SLACK_TITLE: CI flow / Failure
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: Cancel
         uses: rtCamp/action-slack-notify@v2
         if: cancelled()
