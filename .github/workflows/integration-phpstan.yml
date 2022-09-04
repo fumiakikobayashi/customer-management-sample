@@ -20,6 +20,8 @@ jobs:
           tools: composer:v2
       - name: Current Directory
         run: pwd
+      - name: Current Directory
+        run: ls
       - name: Composer install
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Run PHPStan
