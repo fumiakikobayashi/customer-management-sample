@@ -8,7 +8,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: src
+        working-directory: src/backend
 
     steps:
       - uses: actions/checkout@v2
@@ -18,10 +18,10 @@ jobs:
         with:
           php-version: '8.1'
           tools: composer:v2
-      - name: Current Directory
+      - name: Pwd
         run: pwd
       - name: Current Directory
-        run: ls
+        run: Ls
       - name: Composer install
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Run PHPStan
