@@ -8,7 +8,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: src
+        working-directory: src/backend
 
     steps:
       - uses: actions/checkout@v2
@@ -16,21 +16,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
+          tools: php-cs-fixer:3
 
-      - name: Prepare
-        run: |
-          wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v3.0.0/php-cs-fixer.phar -O php-cs-fixer
-          chmod a+x php-cs-fixer
-
-      - name: OS Version
-        run: cat /etc/os-release
-
-      - name: PHP Version
-        run: php -v
-
-      - name: PHP CS Fixer Version
-        run: php php-cs-fixer --version
-
-      - name: PHP CS Fixer Run
-        run: php php-cs-fixer fix --diff -vvv --dry-run
+      - name: Run PHP CS Fixer
+        run: php-cs-fixer fix --diff -vvv --dry-run
