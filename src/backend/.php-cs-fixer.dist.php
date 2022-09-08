@@ -1,12 +1,20 @@
 <?php declare(strict_types=1);
 
-return PhpCsFixer\Config::create()
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('vendor')
+    ->in([
+             __DIR__ . '/app',
+             __DIR__ . '/config',
+             __DIR__ . '/database/factories',
+             __DIR__ . '/database/seeders',
+             __DIR__ . '/routes',
+             __DIR__ . '/tests',
+         ]);
+
+$config = new PhpCsFixer\Config();
+return $config
     ->setRiskyAllowed(false)
     ->setRules([
                    '@PSR2' => true,
                ])
-    ->setFinder(PhpCsFixer\Finder::create()
-                    ->exclude('vendor')
-                    ->in('./app')
-                    ->in('./tests')
-    );
+    ->setFinder($finder);
