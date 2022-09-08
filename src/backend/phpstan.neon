@@ -8,5 +8,5 @@ parameters:
         - config
         - database
         - resources/views
-        - routes
+#        - routes
     level: 0

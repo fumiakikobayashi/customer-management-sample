@@ -19,5 +19,19 @@ jobs:
           php-version: '8.1'
           tools: php-cs-fixer:3
 
+      - name: Dry Run Php Cs Fixer
+        run: |
+          php-cs-fixer fix --dry-run --diff --diff-format=udiff --using-cache=no || true
+
       - name: Run PHP CS Fixer
-        run: php-cs-fixer fix --diff -vvv --dry-run
+        run: |
+          php-cs-fixer fix --using-cache=no
+          git status | grep modified || echo "GIT_STATUS_RESULT=$(echo $?)" >> $GITHUB_ENV
+
+      - name: Commit & Push
+        if: ${{ env.GIT_STATUS_RESULT == 0 }}
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git commit -a -m "auto code format by Github Actions"
+          git push
