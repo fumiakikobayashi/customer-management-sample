@@ -1,0 +1,26 @@
+name: PHPUnit
+
+on: [ push ]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: src/backend
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+
+      - name: Composer install
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Run PHPStan
+        run: vendor/bin/phpunit
