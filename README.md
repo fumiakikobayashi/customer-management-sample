@@ -6,7 +6,7 @@ Build a new Laravel project.
 ```
 $ git clone git@github.com:fumiakikobayashi/form-app.git
 
-$ cd docker-laravel
+$ cd form-app
 $ make create-project
 $ make install-recommend-packages
 ```
@@ -18,7 +18,7 @@ It is assumed that Laravel is already installed.
 ```
 $ git clone git@github.com:fumiakikobayashi/form-app.git
 
-$ cd docker-laravel
+$ cd form-app
 
 # Git clone your Laravel project to the docker-laravel/backend directory
 $ git clone git@github.com:fumiakikobayashi/form-app.git
