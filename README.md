@@ -4,7 +4,8 @@
 Build a new Laravel project.
 
 ```
-$ git clone git@github.com:ucan-lab/docker-laravel.git
+$ git clone git@github.com:fumiakikobayashi/form-app.git
+
 $ cd docker-laravel
 $ make create-project
 $ make install-recommend-packages
@@ -15,7 +16,8 @@ http://localhost
 It is assumed that Laravel is already installed.
 
 ```
-$ git clone git@github.com:ucan-lab/docker-laravel.git
+$ git clone git@github.com:fumiakikobayashi/form-app.git
+
 $ cd docker-laravel
 
 # Git clone your Laravel project to the docker-laravel/backend directory
