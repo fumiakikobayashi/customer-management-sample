@@ -1,4 +1,4 @@
-# 簡易フォームApp
+# Simple Form App
 
 ## A. Create Laravel Project
 Build a new Laravel project.
