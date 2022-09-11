@@ -6,7 +6,7 @@ volumes:
   pma-session-store:
 
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: ./infra/docker/php/Dockerfile
@@ -34,7 +34,20 @@ services:
       - DB_USERNAME=${DB_USERNAME:-phper}
       - DB_PASSWORD=${DB_PASSWORD:-secret}
 
-  web:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./infra/docker/react/Dockerfile
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - type: bind
+        source: ./src/frontend
+        target: /data
+    ports:
+      - '3000:3000'
+
+  nginx:
     build:
       context: .
       dockerfile: ./infra/docker/nginx/Dockerfile
@@ -46,7 +59,7 @@ services:
     volumes:
       - type: bind
         source: ./src/backend
-        target: /data
+        target: /app
 
   db:
     build:
