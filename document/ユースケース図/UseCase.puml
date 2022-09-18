@@ -1,0 +1,11 @@
+@startuml
+left to right direction
+actor "ユーザー" as user
+
+rectangle form-app {
+  usecase "金額を登録する" as UC1
+  usecase "フォームを送信する" as UC2
+}
+user --> UC1
+user --> UC2
+@enduml

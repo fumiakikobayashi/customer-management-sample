@@ -1,0 +1,11 @@
+@startuml
+
+hide circle
+
+package form-app {
+	class フォーム {
+	    説明
+	}
+}
+
+@enduml
