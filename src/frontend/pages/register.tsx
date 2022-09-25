@@ -7,35 +7,33 @@ import axios from "../libs/axios";
 
 axios.defaults.withCredentials = true
 
-const Login: NextPage = () => {
+const register: NextPage = () => {
     const router: NextRouter = useRouter()
 
-    const login = async (event: any) => {
+    const register = async (event: any) => {
         event.preventDefault()
         const email = event.target.email.value
         const password = event.target.password.value
 
         await axios.get('http://localhost/sanctum/csrf-cookie')
             .then(res => {
-                fetchUserLogin(email, password)
+                fetchUserRegister(email, password)
             })
     }
 
-    const fetchUserLogin = async (email: string, password:  string) => {
-        console.log({name: 'kobayashi_f', email: email, password: password})
-        return await axios.post('http://localhost/api/register', {name: 'kobayashi_f', email: email, password: password})
+    const fetchUserRegister = async (email: string, password:  string) => {
+        return await axios.post('http://localhost/api/register', {name: 'kobayashi_f', email: email, password: password, password_confirmation: password})
             .then(response => {
                 router.push('/')
             })
             .catch(err => {
-                console.log(err.response);
             })
     }
 
     return (
         <>
             <Head>
-                <title>ログイン</title>
+                <title>新規登録</title>
             </Head>
 
             <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -47,11 +45,11 @@ const Login: NextPage = () => {
                             alt="Your Company"
                         />
                         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                            ログイン
+                            新規登録
                         </h2>
                     </div>
                     <form
-                        onSubmit={login}
+                        onSubmit={register}
                         className="mt-8 space-y-6"
                     >
                         <input
@@ -115,7 +113,7 @@ const Login: NextPage = () => {
                                 type="submit"
                                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
-                                ログイン
+                                登録
                             </button>
                         </div>
                     </form>
@@ -125,4 +123,4 @@ const Login: NextPage = () => {
     )
 }
 
-export default Login
+export default register

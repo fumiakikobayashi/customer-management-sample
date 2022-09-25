@@ -9,8 +9,8 @@ const Home: NextPage = () => {
                 <title>Index Page</title>
             </Head>
             <main>
-                <Link href="/login">
-                    <a>ログイン</a>
+                <Link href="/register">
+                    <a>新規登録</a>
                 </Link>
             </main>
         </div>
