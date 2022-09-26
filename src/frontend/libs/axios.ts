@@ -2,12 +2,11 @@ import Axios from 'axios'
 
 const axios = Axios.create({
     baseURL: process.env.API_URL,
-    headers: {
-        'Content-Type': 'application/json; charset=utf8',
-        'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-    },
+    responseType: 'json',
     withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json;',
+    },
 })
 
 export default axios

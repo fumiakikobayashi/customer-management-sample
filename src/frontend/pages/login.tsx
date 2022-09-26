@@ -4,11 +4,13 @@ import {useRouter} from "next/router"
 import { getCookie, setCookie } from 'typescript-cookie'
 import {NextRouter} from "next/dist/shared/lib/router/router";
 import axios from "../libs/axios";
+import {useUserState} from "../atoms/userAtom";
 
 axios.defaults.withCredentials = true
 
 const Login: NextPage = () => {
     const router: NextRouter = useRouter()
+    const { setUser } = useUserState()
 
     const login = async (event: any) => {
         event.preventDefault()
@@ -16,20 +18,20 @@ const Login: NextPage = () => {
         const password = event.target.password.value
 
         await axios.get('http://localhost/sanctum/csrf-cookie')
-            .then(res => {
-                fetchUserLogin(email, password)
+            .then(() => {
+                axios.post('http://localhost/api/login', {email: email, password: password})
+                    .then(response => {
+                        console.log(response)
+                        setUser({id: 1})
+                        router.push('/')
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
             })
     }
 
     const fetchUserLogin = async (email: string, password:  string) => {
-        console.log({name: 'kobayashi_f', email: email, password: password})
-        return await axios.post('http://localhost/api/register', {name: 'kobayashi_f', email: email, password: password})
-            .then(response => {
-                router.push('/')
-            })
-            .catch(err => {
-                console.log(err.response);
-            })
     }
 
     return (
