@@ -12,19 +12,27 @@ const register: NextPage = () => {
 
     const register = async (event: any) => {
         event.preventDefault()
+        const accountName = event.target.name.value
         const email = event.target.email.value
         const password = event.target.password.value
+        const passwordConfirm = event.target.password_confirm.value
 
         await axios.get('http://localhost/sanctum/csrf-cookie')
             .then(res => {
-                fetchUserRegister(email, password)
+                fetchUserRegister(accountName, email, password, passwordConfirm)
             })
     }
 
-    const fetchUserRegister = async (email: string, password:  string) => {
-        return await axios.post('http://localhost/api/register', {name: 'kobayashi_f', email: email, password: password, password_confirmation: password})
+    const fetchUserRegister = async (accountName: string, email: string, password: string, passwordConfirm: string) => {
+        const requestData = {
+            name: accountName,
+            email: email,
+            password: password,
+            password_confirmation: passwordConfirm
+        }
+        return await axios.post('http://localhost/api/register', requestData)
             .then(response => {
-                router.push('/')
+                router.push('/customers')
             })
             .catch(err => {
             })
@@ -58,20 +66,38 @@ const register: NextPage = () => {
                             defaultValue="true"
                         />
                         <div className="-space-y-px rounded-md shadow-sm">
+                            <label>
+                                   アカウント名
+                            </label>
                             <div>
-                                <label htmlFor="email-address" className="sr-only">
-                                    メールアドレス
-                                </label>
+                                <input
+                                    id="name"
+                                    name="name"
+                                    autoComplete="name"
+                                    required
+                                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    placeholder="山田花子"
+                                />
+                            </div>
+
+                            <label>
+                                メールアドレス
+                            </label>
+                            <div>
                                 <input
                                     id="email-address"
                                     name="email"
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    placeholder="メールアドレス"
+                                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    placeholder="aaa@bbb.com"
                                 />
                             </div>
+
+                            <label>
+                                パスワード
+                            </label>
                             <div>
                                 <label htmlFor="password" className="sr-only">
                                     Password
@@ -82,29 +108,25 @@ const register: NextPage = () => {
                                     type="password"
                                     autoComplete="current-password"
                                     required
-                                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    placeholder="パスワード"
+                                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                 />
                             </div>
-                        </div>
 
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember-me"
-                                    name="remember-me"
-                                    type="checkbox"
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                    ログイン状態を保存する
+                            <label>
+                                パスワード（確認用）
+                            </label>
+                            <div>
+                                <label htmlFor="password" className="sr-only">
+                                    Password
                                 </label>
-                            </div>
-
-                            <div className="text-sm">
-                                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                    パスワードをお忘れの方はこちら
-                                </a>
+                                <input
+                                    id="password_confirm"
+                                    name="password_confirm"
+                                    type="password"
+                                    autoComplete="current-password"
+                                    required
+                                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                />
                             </div>
                         </div>
 
