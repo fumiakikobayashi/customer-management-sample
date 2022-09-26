@@ -2,6 +2,7 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link";
 import axios from "../libs/axios";
+import {RecoilRoot} from "recoil";
 
 const Home: NextPage = () => {
     const logout = async () => {
@@ -21,7 +22,7 @@ const Home: NextPage = () => {
     }
 
     return (
-        <div>
+        <RecoilRoot>
             <Head>
                 <title>Index Page</title>
             </Head>
@@ -38,7 +39,7 @@ const Home: NextPage = () => {
                     <a>ログアウト</a>
                 </button>
             </main>
-        </div>
+        </RecoilRoot>
     );
 };
 
