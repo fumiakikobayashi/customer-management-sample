@@ -23,15 +23,12 @@ const Login: NextPage = () => {
                     .then(response => {
                         console.log(response)
                         setUser({id: 1})
-                        router.push('/')
+                        router.push('/customers')
                     })
                     .catch(err => {
                         console.log(err.response);
                     })
             })
-    }
-
-    const fetchUserLogin = async (email: string, password:  string) => {
     }
 
     return (
