@@ -4,6 +4,7 @@ import axios from "../../libs/axios"
 import {useEffect, useState} from "react"
 import {NextRouter} from "next/dist/shared/lib/router/router"
 import {useRouter} from "next/router"
+import {useAuth} from "../hooks/useAuth";
 
 type Customer = {
     title: string;
@@ -13,20 +14,17 @@ type Customer = {
 const Customer: NextPage = () => {
     const router: NextRouter = useRouter()
     const [customers, setCustomers] = useState<Customer[]>([])
-    const { user } = useUserState()
+    const { checkLoggedIn } = useAuth()
 
     useEffect(() => {
-        if (!user) {
-            router.push('/login')
-            return
+        const init = async () => {
+            const response: boolean = await checkLoggedIn()
+            if (!response) {
+                await router.push('/login')
+            }
         }
-        axios
-            .get('/api/customers')
-            .then((response) => {
-                setCustomers(response.data.data)
-            })
-            .catch((err) => console.log(err.response))
-    }, [user, router])
+        init()
+    }, [])
 
     return (
         <div>

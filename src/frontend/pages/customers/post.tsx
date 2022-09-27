@@ -4,6 +4,7 @@ import axios from "../../libs/axios"
 import {useEffect, useState} from "react"
 import {NextRouter} from "next/dist/shared/lib/router/router"
 import {useRouter} from "next/router"
+import {useAuth} from "../hooks/useAuth";
 
 type CustomerForm = {
     title: string;
@@ -16,14 +17,17 @@ const Post: NextPage = () => {
         title: '',
         body: ''
     })
-    const { user } = useUserState()
+    const { checkLoggedIn } = useAuth()
 
     useEffect(() => {
-        if (!user) {
-            router.push('/login')
-            return
+        const init = async () => {
+            const response: boolean = await checkLoggedIn()
+            if (!response) {
+                await router.push('/login')
+            }
         }
-    }, [user, router])
+        init()
+    }, [])
 
     return (
         <div>
