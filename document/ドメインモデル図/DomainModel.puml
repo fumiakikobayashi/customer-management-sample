@@ -1,0 +1,25 @@
+@startuml
+
+hide circle
+
+package customer-management {
+    class ユーザー {
+    }
+	class 顧客管理 {
+	}
+	class 顧客 {
+        - 名前
+        - フリガナ
+        - メールアドレス
+        - 電話番号
+        - 郵便番号
+        - 都道府県
+        - 住所
+        - 備考
+    }
+
+    ユーザー "1" -- "1" 顧客管理
+    顧客管理 "1" -- "0..*" 顧客
+}
+
+@enduml
