@@ -20,12 +20,12 @@ const Login: NextPage = () => {
             .then(() => {
                 axios.post('/api/login', {email: email, password: password})
                     .then(response => {
-                        console.log(response)
                         setUser({id: 1})
                         router.push('/customers')
                     })
                     .catch(err => {
                         console.log(err.response);
+                        alert('ログインに失敗しました')
                     })
             })
     }
