@@ -1,35 +1,33 @@
 import {NextPage} from "next"
 import Head from "next/head"
-import {useRouter} from "next/router";
+import {useRouter} from "next/router"
+import {NextRouter} from "next/dist/shared/lib/router/router";
+import axios from "../libs/axios";
+import {useUserState} from "../atoms/userAtom";
 
-const BACKEND_URL = 'http://127.0.0.1';
-// const BACKEND_URL = process.env.BACKEND_URL;
+axios.defaults.withCredentials = true
 
 const Login: NextPage = () => {
-    const router = useRouter()
+    const router: NextRouter = useRouter()
+    const { setUser } = useUserState()
 
     const login = async (event: any) => {
         event.preventDefault()
         const email = event.target.email.value
         const password = event.target.password.value
 
-        const response = await fetchUserLogin(email, password)
-        if (response.status === 200) {
-            return router.push('/logged')
-        }
-    }
-
-    const fetchUserLogin = async (email: string, password:  string) => {
-        return await fetch(`${BACKEND_URL}/login`, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json; charset=utf8',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({email, password}),
-        })
+        await axios.get('/sanctum/csrf-cookie')
+            .then(() => {
+                axios.post('/api/login', {email: email, password: password})
+                    .then(response => {
+                        setUser({id: 1})
+                        router.push('/customers')
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                        alert('ログインに失敗しました')
+                    })
+            })
     }
 
     return (
