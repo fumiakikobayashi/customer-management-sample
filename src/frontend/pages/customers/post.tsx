@@ -1,6 +1,4 @@
 import type { NextPage } from "next"
-import {useUserState} from "../../atoms/userAtom"
-import axios from "../../libs/axios"
 import {useEffect, useState} from "react"
 import {NextRouter} from "next/dist/shared/lib/router/router"
 import {useRouter} from "next/router"

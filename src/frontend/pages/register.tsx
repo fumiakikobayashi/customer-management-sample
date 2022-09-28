@@ -1,7 +1,6 @@
 import {NextPage} from "next"
 import Head from "next/head"
 import {useRouter} from "next/router"
-import { getCookie, setCookie } from 'typescript-cookie'
 import {NextRouter} from "next/dist/shared/lib/router/router";
 import axios from "../libs/axios";
 
@@ -17,8 +16,8 @@ const register: NextPage = () => {
         const password = event.target.password.value
         const passwordConfirm = event.target.password_confirm.value
 
-        await axios.get('http://localhost/sanctum/csrf-cookie')
-            .then(res => {
+        await axios.get('/sanctum/csrf-cookie')
+            .then(() => {
                 fetchUserRegister(accountName, email, password, passwordConfirm)
             })
     }
@@ -30,11 +29,11 @@ const register: NextPage = () => {
             password: password,
             password_confirmation: passwordConfirm
         }
-        return await axios.post('http://localhost/api/register', requestData)
-            .then(response => {
+        return await axios.post('/api/register', requestData)
+            .then(() => {
                 router.push('/customers')
             })
-            .catch(err => {
+            .catch(() => {
             })
     }
 

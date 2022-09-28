@@ -1,7 +1,6 @@
 import {NextPage} from "next"
 import Head from "next/head"
 import {useRouter} from "next/router"
-import { getCookie, setCookie } from 'typescript-cookie'
 import {NextRouter} from "next/dist/shared/lib/router/router";
 import axios from "../libs/axios";
 import {useUserState} from "../atoms/userAtom";
@@ -17,9 +16,9 @@ const Login: NextPage = () => {
         const email = event.target.email.value
         const password = event.target.password.value
 
-        await axios.get('http://localhost/sanctum/csrf-cookie')
+        await axios.get('/sanctum/csrf-cookie')
             .then(() => {
-                axios.post('http://localhost/api/login', {email: email, password: password})
+                axios.post('/api/login', {email: email, password: password})
                     .then(response => {
                         console.log(response)
                         setUser({id: 1})

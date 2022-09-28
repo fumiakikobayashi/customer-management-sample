@@ -6,17 +6,17 @@ import axios from "../libs/axios";
 const Home: NextPage = () => {
     const logout = async () => {
 
-        await axios.get('http://localhost/sanctum/csrf-cookie')
-            .then(res => {
+        await axios.get('/sanctum/csrf-cookie')
+            .then(() => {
                 fetchUserRegister()
             })
     }
 
     const fetchUserRegister = async () => {
-        return await axios.post('http://localhost/api/logout')
-            .then(response => {
+        return await axios.post('/api/logout')
+            .then(() => {
             })
-            .catch(err => {
+            .catch(() => {
             })
     }
 
