@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Packages\UseCases;
 
+use App\Packages\Infrastructures\CustomerRepositoryInterface;
 use App\Packages\Infrastructures\CustomersDtoFactory;
 use App\Packages\Presentations\Requests\GetCustomerRequest;
 use App\Packages\UseCases\Dto\CustomersDto;
