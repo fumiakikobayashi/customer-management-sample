@@ -108,4 +108,4 @@ ide-helper:
 	docker compose exec backend php artisan ide-helper:meta
 	docker compose exec backend php artisan ide-helper:models --nowrite
 stan:
-	./src/backend/vendor/bin/phpstan analyse --memory-limit=3G
+	./vendor/bin/phpstan analyse --memory-limit=3G
