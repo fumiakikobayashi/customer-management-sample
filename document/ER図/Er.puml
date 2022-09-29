@@ -1,0 +1,48 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "customer" as customer {
+  # id: int
+  --
+  customer_id: varchar
+  first_name: varchar
+  last_name: varchar
+  email: varchar
+  remark: varchar
+}
+
+entity "users" as users {
+  # id: bigint
+  --
+  name: varchar
+  email: varchar
+  email_verified_at: timestamp
+  password: varchar
+  two_factor_secret: text
+  two_factor_recovery_codes: text
+  two_factor_confirmed_at: timestamp
+  remember_token: varchar
+  created_at: timestamp
+  updated_at: timestamp
+}
+
+entity "migrations" as migrations {
+  # id: int
+  --
+  migration: varchar
+  batch: int
+}
+
+entity "password_resets" as password_resets {
+  # email: varchar
+  --
+  token: varchar
+  created_at: timestamp
+}
+
+@enduml
