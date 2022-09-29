@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // 顧客一覧を取得
-    Route::get('/customers', CustomerController::class);
+    Route::get('/customers', [CustomerController::class, 'index']);
 });
