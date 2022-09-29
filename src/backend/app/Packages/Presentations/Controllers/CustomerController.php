@@ -11,6 +11,16 @@ use Exception;
 
 class CustomerController extends Controller
 {
+    private GetCustomerUsecase $getCustomerUsecase;
+
+    /**
+     * @param GetCustomerUsecase $getCustomerUsecase
+     */
+    public function __construct(GetCustomerUsecase $getCustomerUsecase)
+    {
+        $this->getCustomerUsecase = $getCustomerUsecase;
+    }
+
     /**
      * @param GetCustomerRequest $request
      * @return array
@@ -18,7 +28,7 @@ class CustomerController extends Controller
      */
     public function index(GetCustomerRequest $request): array
     {
-        $dto = (new GetCustomerUsecase($request))->execute();
+        $dto = $this->getCustomerUsecase->execute($request);
         return (array)$dto;
     }
 }
