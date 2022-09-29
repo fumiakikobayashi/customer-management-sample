@@ -3,6 +3,7 @@
 namespace App\Packages\UseCases;
 
 use App\Packages\Infrastructures\CustomersDtoFactory;
+use App\Packages\Presentations\Requests\GetCustomerRequest;
 use App\Packages\UseCases\Dto\CustomersDto;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +20,7 @@ class GetCustomerUsecase
     /**
      * @throws Exception
      */
-    public function execute(): CustomersDto
+    public function execute(GetCustomerRequest $request): CustomersDto
     {
         Log::info(__METHOD__, ['START']);
         Log::info(__METHOD__, [
