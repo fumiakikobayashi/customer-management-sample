@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+actor "ユーザー" as user
+
+rectangle customer-management {
+  usecase 顧客の一覧を表示する
+  usecase 顧客を登録する
+  usecase 顧客を編集する
+  usecase 顧客を削除する
+  usecase 顧客を検索する
+  usecase ログインする
+  usecase ログアウトする
+  usecase 新規登録する
+
+  user -- ログインする
+  user -- 新規登録する
+  user -- ログアウトする
+  ログインする - ログアウトする: <<precedes>>
+  ログインする -- 新規登録する: <<precedes>>
+  ログインする -- 顧客の一覧を表示する: <<precedes>>
+  顧客の一覧を表示する -- 顧客を登録する: <<precedes>>
+  顧客の一覧を表示する -- 顧客を削除する: <<precedes>>
+  顧客の一覧を表示する -- 顧客を編集する: <<precedes>>
+  顧客の一覧を表示する -- 顧客を検索する: <<precedes>>
+}
+@enduml

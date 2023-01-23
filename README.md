@@ -1,1 +1,1 @@
-# Simple Form App
+# Customer Management Sample.

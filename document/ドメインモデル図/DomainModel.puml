@@ -1,0 +1,19 @@
+@startuml
+
+hide circle
+
+package customer-management {
+	class 顧客コレクション {
+	}
+	class 顧客 {
+        - 苗字
+        - 名前
+        - メールアドレス
+        - 電話番号
+        - 備考
+    }
+
+    顧客コレクション "1" -- "0..*" 顧客
+}
+
+@enduml
