@@ -6,7 +6,7 @@ volumes:
   pma-session-store:
 
 services:
-  nginx:
+  web:
     build:
       context: .
       dockerfile: ./infra/docker/nginx/Dockerfile
@@ -20,7 +20,7 @@ services:
         source: ./src/backend
         target: /app
 
-  backend:
+  app:
     build:
       context: .
       dockerfile: ./infra/docker/php/Dockerfile
@@ -47,20 +47,6 @@ services:
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-phper}
       - DB_PASSWORD=${DB_PASSWORD:-secret}
-
-  frontend:
-    build:
-      context: .
-      dockerfile: ./infra/docker/react/Dockerfile
-    environment:
-      - NODE_ENV=development
-      - WATCHPACK_POLLING=true
-    volumes:
-      - type: bind
-        source: ./src/frontend
-        target: /app
-    ports:
-      - '3000:3000'
 
   db:
     build:
