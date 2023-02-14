@@ -2,33 +2,13 @@ up:
 	docker compose up -d
 build:
 	docker compose build
-laravel-install:
-	docker compose exec backend composer create-project --prefer-dist laravel/laravel .
-create-project:
-	mkdir -p src/backend
-	@make build
-	@make up
-	@make laravel-install
-	docker compose exec backend php artisan key:generate
-	docker compose exec backend php artisan storage:link
-	docker compose exec backend chmod -R 777 storage bootstrap/cache
-	@make fresh
-install-recommend-packages:
-	docker compose exec backend composer require doctrine/dbal
-	docker compose exec backend composer require --dev ucan-lab/laravel-dacapo
-	docker compose exec backend composer require --dev barryvdh/laravel-ide-helper
-	docker compose exec backend composer require --dev beyondcode/laravel-dump-server
-	docker compose exec backend composer require --dev barryvdh/laravel-debugbar
-	docker compose exec backend composer require --dev roave/security-advisories:dev-master
-	docker compose exec backend php artisan vendor:publish --provider="BeyondCode\DumpServer\DumpServerServiceProvider"
-	docker compose exec backend php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 init:
+	cp .env.example .env
 	docker compose up -d --build
-	docker compose exec backend composer install
-	docker compose exec backend cp .env.example .env
-	docker compose exec backend php artisan key:generate
-	docker compose exec backend php artisan storage:link
-	docker compose exec backend chmod -R 777 storage bootstrap/cache
+	docker compose exec app composer install
+	docker compose exec app php artisan key:generate
+	docker compose exec app php artisan storage:link
+	docker compose exec app chmod -R 777 storage bootstrap/cache
 	@make fresh
 remake:
 	@make destroy
@@ -50,52 +30,52 @@ logs:
 	docker compose logs
 logs-watch:
 	docker compose logs --follow
-log-nginx:
-	docker compose logs nginx
-log-nginx-watch:
-	docker compose logs --follow nginx
-log-backend:
-	docker compose logs backend
-log-backend-watch:
-	docker compose logs --follow backend
+log-web:
+	docker compose logs web
+log-web-watch:
+	docker compose logs --follow web
+log-app:
+	docker compose logs app
+log-app-watch:
+	docker compose logs --follow app
+laravel-log-watch:
+	docker compose exec app tail -f /data/storage/logs/laravel.log
 log-db:
 	docker compose logs db
 log-db-watch:
 	docker compose logs --follow db
-nginx:
-	docker compose exec nginx bash
-backend:
-	docker compose exec backend bash
-frontend:
-	docker compose exec frontend bash
+web:
+	docker compose exec web bash
+app:
+	docker compose exec app bash
 migrate:
-	docker compose exec backend php artisan migrate
+	docker compose exec app php artisan migrate
 fresh:
-	docker compose exec backend php artisan migrate:fresh --seed
+	docker compose exec app php artisan migrate:fresh --seed
 seed:
-	docker compose exec backend php artisan db:seed
+	docker compose exec app php artisan db:seed
 dacapo:
-	docker compose exec backend php artisan dacapo
+	docker compose exec app php artisan dacapo
 rollback-test:
-	docker compose exec backend php artisan migrate:fresh
-	docker compose exec backend php artisan migrate:refresh
+	docker compose exec app php artisan migrate:fresh
+	docker compose exec app php artisan migrate:refresh
 tinker:
-	docker compose exec backend php artisan tinker
+	docker compose exec app php artisan tinker
 test:
-	docker compose exec backend php artisan test
+	docker compose exec app php artisan test
 optimize:
-	docker compose exec backend php artisan optimize
+	docker compose exec app php artisan optimize
 optimize-clear:
-	docker compose exec backend php artisan optimize:clear
+	docker compose exec app php artisan optimize:clear
 cache:
-	docker compose exec backend composer dump-autoload -o
+	docker compose exec app composer dump-autoload -o
 	@make optimize
-	docker compose exec backend php artisan event:cache
-	docker compose exec backend php artisan view:cache
+	docker compose exec app php artisan event:cache
+	docker compose exec app php artisan view:cache
 cache-clear:
-	docker compose exec backend composer clear-cache
+	docker compose exec app composer clear-cache
 	@make optimize-clear
-	docker compose exec backend php artisan event:clear
+	docker compose exec app php artisan event:clear
 db:
 	docker compose exec db bash
 sql:
@@ -103,9 +83,11 @@ sql:
 redis:
 	docker compose exec redis redis-cli
 ide-helper:
-	docker compose exec backend php artisan clear-compiled
-	docker compose exec backend php artisan ide-helper:generate
-	docker compose exec backend php artisan ide-helper:meta
-	docker compose exec backend php artisan ide-helper:models --nowrite
+	docker compose exec app php artisan clear-compiled
+	docker compose exec app php artisan ide-helper:generate
+	docker compose exec app php artisan ide-helper:meta
+	docker compose exec app php artisan ide-helper:models --nowrite
 stan:
-	./vendor/bin/phpstan analyse --memory-limit=3G
+	docker compose exec app ./vendor/bin/phpstan analyse --memory-limit=3G
+cs:
+	docker compose exec app ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --using-cache=no
