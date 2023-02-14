@@ -2,30 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Packages\Domains;
+namespace App\Packages\Domains\Customer;
 
 class Customer
 {
     private CustomerId $customerId;
-    private string $lastName;
-    private string $firstName;
-    private string $email;
-    private string $phoneNumber;
-    private string $remark;
+    private string     $lastName;
+    private string     $firstName;
+    private string     $email;
+    private string     $remark;
 
     public function __construct(
         CustomerId $customerId,
-        string $lastName,
-        string $firstName,
-        string $email,
-        string $phoneNumber,
-        string $remark
+        string     $lastName,
+        string     $firstName,
+        string     $email,
+        string     $remark
     ) {
         $this->customerId = $customerId;
         $this->lastName = $lastName;
         $this->firstName = $firstName;
         $this->email = $email;
-        $this->phoneNumber = $phoneNumber;
         $this->remark = $remark;
     }
 
@@ -59,14 +56,6 @@ class Customer
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhoneNumber(): string
-    {
-        return $this->phoneNumber;
     }
 
     /**

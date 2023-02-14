@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
+    /** 認証済みユーザを取得 */
+    Route::get('/me', function (Request $request) {
         return $request->user();
     });
 
-    // 顧客一覧を取得
+    /** 顧客一覧を取得 */
     Route::get('/customers', [CustomerController::class, 'index']);
 });

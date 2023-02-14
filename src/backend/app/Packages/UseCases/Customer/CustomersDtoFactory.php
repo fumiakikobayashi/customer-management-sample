@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Packages\Infrastructures;
+namespace App\Packages\UseCases\Customer;
 
-use App\Packages\Domains\CustomerCollection;
+use App\Packages\Domains\Customer\CustomerCollection;
 use App\Packages\UseCases\Dto\CustomerDto;
 use App\Packages\UseCases\Dto\CustomersDto;
 
@@ -17,7 +17,7 @@ class CustomersDtoFactory
     public static function create(CustomerCollection $customerCollection): CustomersDto
     {
         $customerDtoList = [];
-        foreach ($customerCollection as $customer) {
+        foreach ($customerCollection->getCustomerList() as $customer) {
             $customerDtoList[] = new CustomerDto(
                 $customer->getCustomerId()->getValue(),
                 $customer->getLastName(),

@@ -6,29 +6,21 @@ namespace App\Packages\Presentations\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Packages\Presentations\Requests\GetCustomerRequest;
-use App\Packages\UseCases\GetCustomerUsecase;
+use App\Packages\UseCases\Customer\GetCustomerUsecase;
 use Exception;
 
 class CustomerController extends Controller
 {
-    private GetCustomerUsecase $getCustomerUsecase;
-
     /**
-     * @param GetCustomerUsecase $getCustomerUsecase
-     */
-    public function __construct(GetCustomerUsecase $getCustomerUsecase)
-    {
-        $this->getCustomerUsecase = $getCustomerUsecase;
-    }
-
-    /**
+     * @param GetCustomerUsecase $usecase
      * @param GetCustomerRequest $request
      * @return array
      * @throws Exception
      */
-    public function index(GetCustomerRequest $request): array
-    {
-        $dto = $this->getCustomerUsecase->execute($request);
-        return (array)$dto;
+    public function index(
+        GetCustomerUsecase $usecase,
+        GetCustomerRequest $request
+    ): array {
+        return (array)$usecase->execute($request);
     }
 }
